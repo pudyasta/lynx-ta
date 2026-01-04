@@ -8,9 +8,13 @@
     "skipLibCheck": true,
 
     "noEmit": true,
+
+    "paths": {
+      "@/*": ["./src/app/*"]
+    }
   },
   "references": [
-    { "path": "./tsconfig.node.json" },
+   { "path": "./tsconfig.node.json" },
     { "path": "./src" },
   ],
   "files": [],

@@ -1,3 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  @keyframes press-bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .animate-press-bounce {
+    animation: press-bounce 0.3s ease-out;
+  }
+}
+
+@font-face {
+  font-family: inter;
+  src: url('../assets/fonts/inter.ttf');
+}
+
+@font-face {
+  font-family: jakarta;
+  src: url('../assets/fonts/Jakarta.ttf');
+}
+
+:root {
+  --font-inter: 'inter', sans-serif;
+  --font-jakarta: 'jakarta', sans-serif;
+
+  --color-light-primary: #1a73e8;
+  --color-light-secondary: #ffc107;
+  --color-light-accent: #e8f0fe;
+  --color-light-success: #28a745;
+  --color-light-error: #dc3545;
+  --color-light-neutral: #202124;
+  --color-light-background: #202124;
+
+  --color-dark-primary: #8ab4f8;
+  --color-dark-secondary: #fdd663;
+  --color-dark-accent: #2d2e31;
+  --color-dark-success: #81c995;
+  --color-dark-error: #f28b82;
+  --color-dark-neutral: #e8eaed;
+  --color-dark-background: #121212;
+}
+
+.text-light-primary {
+  color: var(--color-light-primary);
+}
+.text-light-secondary {
+  color: var(--color-light-secondary);
+}
+.text-light-accent {
+  color: var(--color-light-accent);
+}
+.text-light-success {
+  color: var(--color-light-success);
+}
+.text-light-error {
+  color: var(--color-light-error);
+}
+.text-light-neutral {
+  color: var(--color-light-neutral);
+}

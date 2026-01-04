@@ -10,14 +10,16 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@lynx-js/react": "^0.114.4",
+    "@lynx-js/react": "^0.114.5",
     "@tailwindcss/postcss": "^4.1.17",
     "@tanstack/react-router": "^1.136.18",
+    "axios": "^1.13.2",
     "postcss": "^8.5.6",
     "postcss-loader": "^8.2.0",
     "react-router": "6",
     "tailwindcss": "^3",
-    "url-search-params-polyfill": "^8.2.5"
+    "url-search-params-polyfill": "^8.2.5",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@lynx-js/preact-devtools": "^5.0.1-cf9aef5",
@@ -31,7 +33,7 @@
     "@testing-library/jest-dom": "^6.9.0",
     "@types/react": "^18.3.25",
     "jsdom": "^26.1.0",
-    "prettier": "^3.6.2",
+    "prettier": "3.6.2",
     "typescript": "~5.9.3",
     "vitest": "^3.2.4"
   },
