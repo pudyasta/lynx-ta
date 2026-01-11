@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { useAuth } from '../../context/AuthProvider';
 import { Tabs } from '../../components/common/Tabs';
-import { ProfileScreen } from './components/ProfileScreen';
+import { ProfileScreen } from './components/Profile/ProfileScreen';
+import Courses from './components/Courses/Courses';
 interface Props {}
 
 const HomePage: React.FC<Props> = ({}) => {
   const pages = [
     { key: 'tab2', label: 'Home', content: <text>Home content</text> },
-    { key: 'tab3', label: 'Leasons', content: <text>Leasons content</text> },
+    { key: 'tab3', label: 'Leasons', content: <Courses /> },
     {
       key: 'tab4',
       label: 'Leaderboard',
@@ -15,10 +16,7 @@ const HomePage: React.FC<Props> = ({}) => {
     },
     { key: 'tab1', label: 'Profile', content: <ProfileScreen /> },
   ];
-  // const { accessToken, user } = useAuth();
-  // useEffect(() => {
-  //   console.log(user);
-  // }, []);
+
   return (
     <view className="HomePage w-full">
       {/* <text className="text-white">{accessToken?.access_token}</text> */}

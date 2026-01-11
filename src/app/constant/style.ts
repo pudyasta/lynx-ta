@@ -21,7 +21,7 @@ const LightColors: ColorPalette = {
   Success: '#28A745',
   Error: '#DC3545',
   Neutral: '#202124',
-  Background: '#F8F9FA',
+  Background: '#FFFFFF',
   Disabled: '#9AA0A6',
 };
 
@@ -38,44 +38,44 @@ const DarkColors: ColorPalette = {
 
 export const Colors: ColorPalette = {
   get Primary() {
-    return lynx.__globalProps.appTheme === Theme.Light
-      ? LightColors.Primary
-      : DarkColors.Primary;
+    return lynx.__globalProps.appTheme === Theme.Dark
+      ? DarkColors.Primary
+      : LightColors.Primary;
   },
   get Secondary() {
-    return lynx.__globalProps.appTheme === Theme.Light
-      ? LightColors.Secondary
-      : DarkColors.Secondary;
+    return lynx.__globalProps.appTheme === Theme.Dark
+      ? DarkColors.Secondary
+      : LightColors.Secondary;
   },
   get Accent() {
-    return lynx.__globalProps.appTheme === Theme.Light
-      ? LightColors.Accent
-      : DarkColors.Accent;
+    return lynx.__globalProps.appTheme === Theme.Dark
+      ? DarkColors.Accent
+      : LightColors.Accent;
   },
   get Success() {
-    return lynx.__globalProps.appTheme === Theme.Light
-      ? LightColors.Success
-      : DarkColors.Success;
+    return lynx.__globalProps.appTheme === Theme.Dark
+      ? DarkColors.Success
+      : LightColors.Success;
   },
   get Error() {
-    return lynx.__globalProps.appTheme === Theme.Light
-      ? LightColors.Error
-      : DarkColors.Error;
+    return lynx.__globalProps.appTheme === Theme.Dark
+      ? DarkColors.Error
+      : LightColors.Error;
   },
   get Neutral() {
-    return lynx.__globalProps.appTheme === Theme.Light
-      ? LightColors.Neutral
-      : DarkColors.Neutral;
+    return lynx.__globalProps.appTheme === Theme.Dark
+      ? DarkColors.Neutral
+      : LightColors.Neutral;
   },
   get Background() {
-    return lynx.__globalProps.appTheme === Theme.Light
-      ? LightColors.Background
-      : DarkColors.Background;
+    return lynx.__globalProps.appTheme === Theme.Dark
+      ? DarkColors.Background
+      : LightColors.Background;
   },
 
   get Disabled() {
-    return lynx.__globalProps.appTheme === Theme.Light
-      ? LightColors.Disabled
-      : DarkColors.Disabled;
+    return lynx.__globalProps.appTheme === Theme.Dark
+      ? DarkColors.Disabled
+      : LightColors.Disabled;
   },
 };

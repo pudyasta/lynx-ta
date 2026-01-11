@@ -12,10 +12,6 @@ const StyleContext = createContext<StyleContextType | null>(null);
 export const StyleProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, _setTheme] = useState<Theme>(Theme.Dark);
 
-  useEffect(() => {
-    console.log('ok');
-  }, []);
-
   const setTheme = (theme: Theme) => {
     _setTheme(theme);
     saveTheme(theme);

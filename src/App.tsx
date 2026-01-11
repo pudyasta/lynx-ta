@@ -1,7 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from '@lynx-js/react';
-
+import HomePage from '@/views/Home/HomePage';
 import './app/styles/core.css';
-import './App.css';
 import LoginPage from './app/views/Login/LoginPages';
 
 declare module '@lynx-js/types' {
@@ -11,13 +9,9 @@ declare module '@lynx-js/types' {
   }
 }
 export function App(props: { onRender?: () => void }) {
-  const themeClass = useMemo(
-    () => `theme-${lynx.__globalProps.appTheme}`,
-    [lynx.__globalProps.appTheme],
-  );
   return (
-    <view className={themeClass}>
-      <LoginPage />
+    <view>
+      <HomePage />
     </view>
   );
 }

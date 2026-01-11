@@ -6,10 +6,10 @@
 // import NavIcon from './NavIcon';
 
 import { useNavigate } from 'react-router';
-import Button from '../../../components/common/Button';
-import AchievementBadge from './AchievementBadge';
-import StatTile from './StatTile';
-import { useAuth } from '../../../context/AuthProvider';
+import Button from '../../../../components/common/Button';
+import AchievementBadge from '../AchievementBadge';
+import StatTile from '../StatTile';
+import { useAuth } from '../../../../context/AuthProvider';
 
 export const ProfileScreen = () => {
   const navigate = useNavigate();

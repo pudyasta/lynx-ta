@@ -36,6 +36,7 @@ export function Tabs({
                 color: i === active ? '#1677ff' : '#666666',
                 fontWeight: i === active ? '600' : '400',
               }}
+              className="text-center text-sm"
             >
               {item.label}
             </text>

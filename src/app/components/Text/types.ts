@@ -86,6 +86,11 @@ export interface TypographyProps
   style?: Record<string, string | number>;
 
   size?: TextType;
+
+  /**
+   * To apply custom font family on text
+   */
+  fontFamily?: FontFamily;
 }
 
 export enum TextType {
@@ -96,4 +101,9 @@ export enum TextType {
   b2 = 'b2',
   b3 = 'b3',
   p = 'p',
+}
+
+export enum FontFamily {
+  inter = 'font-inter',
+  jakarta = 'font-jakarta',
 }

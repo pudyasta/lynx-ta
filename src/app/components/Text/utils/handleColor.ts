@@ -12,11 +12,10 @@ const handleColor = ({
   switch (true) {
     case Boolean(link) && !tag:
       return Colors.Primary;
-
     case disabled:
       return Colors.Disabled;
     default:
-      return Colors.Accent;
+      return Colors.Neutral;
   }
 };
 

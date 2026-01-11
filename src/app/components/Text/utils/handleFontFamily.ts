@@ -1,8 +1,8 @@
-import type { TypographyProps } from '../types';
+import { FontFamily } from '../types';
 
-const handleFontFamily = ({ tag }: TypographyProps) => {
-  if (tag) return 'jakarta';
-  return 'inter';
+const handleFontFamily = (fontFamily: FontFamily) => {
+  if (fontFamily === FontFamily.jakarta) return 'font-jakarta';
+  return 'fontinter';
 };
 
 export default handleFontFamily;

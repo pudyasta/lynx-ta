@@ -1,3 +1,4 @@
+import { Colors } from '@/constant/style';
 import { useImperativeHandle, useState, forwardRef } from '@lynx-js/react';
 import { useEffect, useRef } from 'react';
 
@@ -64,12 +65,11 @@ const Input = forwardRef<InputRef, InputProps>(
       }
       timerRef.current = setTimeout(() => {
         setDebouncedValue(newValue);
-        console.log('--- Debounced Value Settled:', newValue);
       }, 300) as unknown as number;
     };
 
     return (
-      <view class="relative w-full min-h-16 ">
+      <view class="relative w-full min-h-14 ">
         {/* Floating Label */}
 
         <view class="z-10">
@@ -77,9 +77,10 @@ const Input = forwardRef<InputRef, InputProps>(
             class={`absolute  transition-all duration-300 
             ${
               isFloating
-                ? '-top-3 text-sm text-gray-600 bg-white px-2 rounded left-3'
-                : 'top-4 text-xl text-gray-500  left-6'
+                ? '-top-3 text-sm text-gray-600  px-2 rounded left-3'
+                : 'top-4 text-lg text-gray-500  left-6'
             }`}
+            style={{ backgroundColor: Colors.Background }}
           >
             {title}
           </text>
@@ -88,7 +89,6 @@ const Input = forwardRef<InputRef, InputProps>(
         <view
           class={`flex transition-all duration-300 items-center border border-2 ${isFloating ? 'border-blue-300' : 'border-gray-200'}  rounded-xl px-4 py-4 ${error ? 'border-red-500' : ''}`}
         >
-          {/* {icon && <image src={icon} class="h-full w-6 mr-2 opacity-70" />} */}
           <input
             type={variant === 'password' && !showPassword ? 'password' : 'text'}
             bindfocus={() => setFocused(true)}
@@ -100,7 +100,8 @@ const Input = forwardRef<InputRef, InputProps>(
             bindinput={(res: any) => {
               handleInput(res.detail.value);
             }}
-            class="bg-transparent w-full h-full text-lg outline-none ml-1"
+            class="bg-transparent w-full h-full text-lg outline-none ml-1 relative z-20"
+            style={{ color: Colors.Neutral }}
           />
           {variant === 'password' && (
             <text
@@ -112,12 +113,7 @@ const Input = forwardRef<InputRef, InputProps>(
           )}
         </view>
         <view className={` py-2 ${error ? 'block' : 'hidden'}`}>
-          {error &&
-            error.map((e, index) => (
-              <text key={index} className="text-red-500 mt-1">
-                {e}
-              </text>
-            ))}
+          {error && <text className="text-red-500 mt-1">{error[0]}</text>}
         </view>
       </view>
     );

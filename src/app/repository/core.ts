@@ -1,7 +1,7 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
 import { API_BASE_URL } from '../_config/API';
 import { useAuth } from '../context/AuthProvider';
-import { authRepo } from './auth/auth';
+import { authRepo } from './auth';
 import { useNavigate } from 'react-router';
 
 const instance = axios.create({

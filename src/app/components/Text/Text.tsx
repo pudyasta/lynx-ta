@@ -3,7 +3,7 @@ import handleFontSize from './utils/handleFontSize';
 import handleLineHeight from './utils/handleLineHeight';
 import handleLetterSpacing from './utils/handleLetterSpacing';
 import handleColor from './utils/handleColor';
-import type { TypographyProps } from './types';
+import { FontFamily, type TypographyProps } from './types';
 import handleFontFamily from './utils/handleFontFamily';
 
 const Text = ({
@@ -14,6 +14,7 @@ const Text = ({
   children,
   color,
   disabled = false,
+  fontFamily = FontFamily.inter,
   large = false,
   link = '',
   main = false,
@@ -29,17 +30,16 @@ const Text = ({
   return (
     <text
       style={{
-        fontFamily: handleFontFamily({ tag }),
+        fontFamily: handleFontFamily(fontFamily),
         display: link || asSpan ? 'linear' : 'block',
         position: 'relative',
+        fontWeight: handleFontWeight(bold),
         fontSize: `${handleFontSize({ size })}px`,
-        lineHeight: `${handleLineHeight({ body, tag, micro, caption, large })}px`,
         color: handleColor({ color, link, tag, main, disabled }),
+        lineHeight: `${handleLineHeight({ body, tag, micro, caption, large })}px`,
         letterSpacing: `${handleLetterSpacing({ body, tag, uppercase })}px`,
-        textDecoration: link ? 'none' : 'initial',
         textTransform: uppercase ? 'uppercase' : 'none',
-        fontWeight: handleFontWeight({ bold }),
-
+        textDecoration: link ? 'none' : 'initial',
         ...(margin ? { margin } : {}),
         ...style,
       }}
