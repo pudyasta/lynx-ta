@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "rspeedy build",
+    "build": "rspeedy build && cd dist && cp main.lynx.bundle ../android/app/src/main/assets/",
     "dev": "rspeedy dev",
     "format": "prettier --write .",
     "preview": "rspeedy preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "postinstall": "t4l link --silent"
   },
   "dependencies": {
     "@lynx-js/react": "^0.114.5",
@@ -15,6 +16,7 @@
     "@tanstack/react-query": "^5.90.16",
     "@tanstack/react-router": "^1.136.18",
     "axios": "^1.13.2",
+    "jwt-decode": "^4.0.0",
     "postcss": "^8.5.6",
     "postcss-loader": "^8.2.0",
     "react-router": "6",

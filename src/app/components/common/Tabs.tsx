@@ -1,11 +1,21 @@
 import { useState } from '@lynx-js/react';
 
+interface TabItem {
+  key?: string;
+  label: {
+    text: string;
+    srcActive: string;
+    srcInactive: string;
+  };
+  content: React.ReactNode;
+}
+
 export function Tabs({
   items,
   defaultIndex = 0,
   onChange,
 }: {
-  items: any[];
+  items: TabItem[];
   defaultIndex?: number;
   onChange?: (i: number) => void;
 }) {
@@ -15,10 +25,13 @@ export function Tabs({
     onChange?.(i);
   };
   return (
-    <view className="w-full">
+    <>
       {/* content */}
-      <scroll-view className="min-h-screen bg-gray-100 flex flex-col">
-        <view>{items[active]?.content}</view>
+      <scroll-view
+        className=" bg-gray-100 h-[calc(100vh-56px)]"
+        scroll-orientation="vertical"
+      >
+        {items[active]?.content}
       </scroll-view>
 
       {/* TABS */}
@@ -27,22 +40,22 @@ export function Tabs({
           <view
             key={item.key ?? i}
             bindtap={() => handleChange(i)}
-            className={`py-6 pb-10 flex items-center justify-center w-full border-b-2 ${
+            className={`pt-5 pb-6 flex items-center flex-col justify-center w-full border-b-2 gap-1 ${
               i === active ? 'border-b-[#1677ff]' : ''
             }`}
           >
+            <image
+              src={i === active ? item.label.srcActive : item.label.srcInactive}
+              className="w-8 h-8 transition-all duration-300"
+            />
             <text
-              style={{
-                color: i === active ? '#1677ff' : '#666666',
-                fontWeight: i === active ? '600' : '400',
-              }}
-              className="text-center text-sm"
+              className={`text-sm text-gray-500 font-semibold ${i === active ? 'text-[#1677ff]' : ''}`}
             >
-              {item.label}
+              {item.label.text}
             </text>
           </view>
         ))}
       </view>
-    </view>
+    </>
   );
 }

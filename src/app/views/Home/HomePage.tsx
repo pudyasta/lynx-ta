@@ -1,27 +1,63 @@
-import { useEffect } from 'react';
-import { useAuth } from '../../context/AuthProvider';
 import { Tabs } from '../../components/common/Tabs';
-import { ProfileScreen } from './components/Profile/ProfileScreen';
 import Courses from './components/Courses/Courses';
+
+import {
+  homeActive,
+  homeInactive,
+  userActive,
+  userInactive,
+  rankingActive,
+  rankingInactive,
+  bookActive,
+  bookInactive,
+} from '../../assets/images/homeTabIcon';
+import Leaderboard from './components/Leaderboard/Leaderboard';
+import ProfileScreen from './components/Profile/ProfileScreen';
+import Home from './components/Home/Home';
+
 interface Props {}
 
 const HomePage: React.FC<Props> = ({}) => {
   const pages = [
-    { key: 'tab2', label: 'Home', content: <text>Home content</text> },
-    { key: 'tab3', label: 'Leasons', content: <Courses /> },
     {
-      key: 'tab4',
-      label: 'Leaderboard',
-      content: <text>Leaderboard content</text>,
+      label: {
+        text: 'Home',
+        srcActive: homeActive,
+        srcInactive: homeInactive,
+      },
+      content: <Home />,
     },
-    { key: 'tab1', label: 'Profile', content: <ProfileScreen /> },
+    {
+      label: {
+        text: 'Courses',
+        srcActive: bookActive,
+        srcInactive: bookInactive,
+      },
+      content: <Courses />,
+    },
+    {
+      label: {
+        text: 'Ranking',
+        srcActive: rankingActive,
+        srcInactive: rankingInactive,
+      },
+      content: <Leaderboard />,
+    },
+    {
+      label: {
+        text: 'Profile',
+        srcActive: userActive,
+        srcInactive: userInactive,
+      },
+      content: <ProfileScreen />,
+    },
   ];
 
   return (
-    <view className="HomePage w-full">
-      {/* <text className="text-white">{accessToken?.access_token}</text> */}
+    <>
       <Tabs items={pages} />
-    </view>
+    </>
   );
 };
+
 export default HomePage;

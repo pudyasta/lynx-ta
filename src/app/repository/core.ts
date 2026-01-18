@@ -1,12 +1,11 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
-import { API_BASE_URL } from '../_config/API';
 import { useAuth } from '../context/AuthProvider';
 import { authRepo } from './auth';
 import { useNavigate } from 'react-router';
+import { API_BASE_URL } from '@/model/api';
 
 const instance = axios.create({
   baseURL: API_BASE_URL,
-  // timeout: 1000,
   headers: { 'X-Custom-Header': 'foobar', 'Content-Type': 'application/json' },
 });
 
@@ -66,6 +65,7 @@ export const authAPIClient = async (
   setAccessToken({
     access_token: newToken.data.access_token,
     refresh_token: accessToken.refresh_token,
+    expires_in: newToken.data.expires_in,
   });
 
   /**

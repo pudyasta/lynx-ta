@@ -22,14 +22,14 @@ export default function LoginPage() {
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const nav = useNavigate();
-  const { accessToken } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { execute, isLoading } = useLogin({
     onValidationError: (errors) => {
       if (errors.email) emailRef.current?.setError(errors.email);
       if (errors.password) passwordRef.current?.setError(errors.password);
     },
     onSuccess: () => {
-      // alert('Logged in successfully!');
+      nav('/home', { replace: true });
     },
     onError: (error) => {
       setShowAlert(true);
@@ -37,12 +37,12 @@ export default function LoginPage() {
   });
 
   useEffect(() => {
-    if (accessToken) {
-      nav('/home', { replace: true });
+    if (isAuthenticated) {
+      nav('/', { replace: true });
       return;
     }
-    if (didInit) return;
-    setDidInit(true);
+    // if (didInit) return;
+    // setDidInit(true);
   }, []);
 
   async function loginUser() {

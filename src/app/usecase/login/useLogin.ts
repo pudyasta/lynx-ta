@@ -1,7 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { loginSchema, type LoginSchema } from '../../usecase/login/loginSchema';
+import { loginSchema, type LoginSchema } from './loginValidation';
 import { authRepo } from '@/repository/auth';
-import type { LoginRequest } from '@/model/auth';
+import type { LoginRequest } from '@/repository/auth/type';
+import { useNavigate } from 'react-router';
+import { useAuth } from '@/context/AuthProvider';
+import { PrefKey, setPref } from '@/helper/localStorage';
 
 interface UseLoginOptions {
   onValidationError?: (errors: any) => void;
@@ -10,6 +13,9 @@ interface UseLoginOptions {
 }
 
 export const useLogin = (options?: UseLoginOptions) => {
+  const nav = useNavigate();
+  const { setAccessToken, setUser } = useAuth();
+
   const mutation = useMutation({
     mutationFn: async (rawValues: LoginRequest) => {
       const result = loginSchema.safeParse(rawValues);
@@ -25,11 +31,31 @@ export const useLogin = (options?: UseLoginOptions) => {
       });
     },
     onSuccess: (data) => {
+      if (!data.data?.access_token || !data.data?.refresh_token) {
+        throw new Error('Invalid token response');
+      }
+
       options?.onSuccess?.(data);
-      console.log(data);
+      setAccessToken({
+        access_token: data.data.access_token,
+        refresh_token: data.data.refresh_token,
+        expires_in: data.data.expires_in,
+      });
+      setUser({
+        id: data.data.user.id,
+        name: data.data.user.name,
+        username: data.data.user.username,
+        email: data.data.user.email,
+        status: data.data.user.status,
+        email_verified_at: data.data.user.email_verified_at,
+        created_at: data.data.user.created_at,
+        updated_at: data.data.user.updated_at,
+        roles: data.data.user.roles,
+      });
+
+      nav('/', { replace: true });
     },
     onError: (error: any) => {
-      console.log(error);
       if (error.type === 'VALIDATION_ERROR') {
         options?.onValidationError?.(error.errors);
       }

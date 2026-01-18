@@ -1,0 +1,23 @@
+{
+    "user": {
+        "id": 4,
+        "name": "Student",
+        "email": "student@example.com",
+        "username": "student",
+        "avatar_url": null,
+        "status": "active",
+        "account_status": "active",
+        "created_at": "2026-01-11T19:44:13.000000Z",
+        "email_verified_at": "2026-01-11T19:44:13.000000Z",
+        "last_active_relative": null,
+        "is_password_set": true,
+        "roles": [
+            "Student"
+        ],
+        "media": []
+    },
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbGV2bC1iYWNrZW5kLnNpdGUvYXBpL3YxL2F1dGgvbG9naW4iLCJpYXQiOjE3Njg2NDkzNjMsImV4cCI6MTc2ODY1MDI2MywibmJmIjoxNzY4NjQ5MzYzLCJqdGkiOiJsOXIxd0I0Ym5vSlEwRlU5Iiwic3ViIjoiNCIsInBydiI6ImYxZDM0YWJkNDI0NzM1MzgyMTIzNmI0ODE4OTcyYTg1Mjg0MzgzYjciLCJzdGF0dXMiOiJhY3RpdmUiLCJyb2xlcyI6WyJTdHVkZW50Il19.k1lbC8oKyVXNpDVNVmQ3jky_c0SnkltsWKrKHg0vZEM",
+    "refresh_token": "IQFQBfXKuxnLLmRcDPI2hqrpGNgnuVoeeGXLGbErqC4sh7ntuVNE2T32dn9MdtdS",
+    "expires_in": 900,
+    "message": null
+}

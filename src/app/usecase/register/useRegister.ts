@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
-import { registerSchema, type RegisterSchema } from './registerSchema';
+import { registerSchema, type RegisterSchema } from './registerValidation';
 import { authRepo } from '@/repository/auth';
 import { useMutation } from '@tanstack/react-query';
-import type { RegisterRequest } from '@/model/auth';
+import type { RegisterRequest } from '@/repository/auth/type';
 
 interface UseRegisterOptions {
   onValidationError?: (errors: any) => void;

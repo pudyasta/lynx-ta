@@ -1,158 +1,164 @@
-// --- Imports (Conceptual, not actual imports) ---
-// import { IoMdPencil, IoMdExit, IoHomeOutline, IoBookOutline, IoStatsChartOutline, IoPerson } from 'react-icons/io';
-// import { FaTarget, FaFire, FaBolt } from 'react-icons/fa';
-// import StatTile from './StatTile';
-// import AchievementBadge from './AchievementBadge';
-// import NavIcon from './NavIcon';
-
+import Card from '@/components/common/Card';
+import icon from '../../../../assets/images/icon1.png';
+import Button from '@/components/common/Button';
 import { useNavigate } from 'react-router';
-import Button from '../../../../components/common/Button';
-import AchievementBadge from '../AchievementBadge';
-import StatTile from '../StatTile';
-import { useAuth } from '../../../../context/AuthProvider';
+import { useEffect, useState } from 'react';
+import type { User } from '@/repository/auth/type';
+import { getPref, PrefKey } from '@/helper/localStorage';
+import { useAuth } from '@/context/AuthProvider';
 
-export const ProfileScreen = () => {
-  const navigate = useNavigate();
-  const { logout } = useAuth();
+function ProfileScreen() {
+  const nav = useNavigate();
+  const level = 4;
+  const progress = 0.6; // 60% filled
+  const { user, logout } = useAuth();
 
-  // --- Component Data ---
-  const userData = {
-    name: 'DemoUser',
-    bio: 'Learning enthusiast!',
-    streak: 7,
-    level: 3,
-    currentXP: 1250,
-    neededXP: 1500,
-    totalXP: 1250,
-    lessons: 0,
-    courses: 1,
-  };
-
-  const achievements = [
-    {
-      title: 'First Steps',
-      icon: 'FaTarget',
-      description: 'first lesson',
-      colorClass: 'bg-red-500',
-    },
-    {
-      title: 'On Fire',
-      icon: 'FaFire',
-      description: 'day streak',
-      colorClass: 'bg-red-500',
-    },
-    {
-      title: 'Week',
-      icon: 'FaBolt',
-      description: 'Maintain a 7-day streak',
-      colorClass: 'bg-yellow-500',
-    },
-  ];
-  // --- Helper Functions ---
-  const progressPercent = (userData.currentXP / userData.neededXP) * 100;
-
-  const UserProfileCard = () => (
-    <view className="bg-blue-500 p-8 pt-4 flex flex-col items-center">
-      {/* Avatar (Placeholder 'D') */}
-      <view className="w-24 h-24 bg-white rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-        <text className="text-5xl font-bold text-blue-600">D</text>
-      </view>
-
-      <text className="text-2xl font-semibold text-white mt-4">
-        {userData.name}
-      </text>
-      <text className="text-sm text-white opacity-90">{userData.bio}</text>
-
-      {/* Streak Badge */}
-      <view className="bg-yellow-400 rounded-full py-1 px-4 mt-3 flex items-center space-x-1 shadow-md">
-        {/* <FaFire className="w-4 h-4 text-orange-700" /> */}
-        <text className="text-sm font-bold text-orange-700">
-          {userData.streak} days
-        </text>
-      </view>
-    </view>
-  );
-
-  const LevelProgress = () => (
-    <view className="p-4 pt-6 bg-white -mt-4 rounded-t-2xl shadow-lg">
-      <view className="flex justify-between items-center mb-2">
-        <text className="text-lg font-semibold text-gray-800">
-          Level {userData.level}
-        </text>
-        <text className="text-sm text-gray-600">
-          {userData.currentXP}/{userData.neededXP} XP
-        </text>
-      </view>
-
-      {/* Progress Bar */}
-      <view className="w-full bg-gray-200 rounded-full h-3">
-        <view
-          className="bg-blue-500 h-3 rounded-full"
-          style={{ width: `${progressPercent}%` }}
-        ></view>
-      </view>
-    </view>
-  );
-
+  useEffect(() => {}, []);
   return (
-    <view className="min-h-screen bg-gray-100 flex flex-col">
-      {/* <ProfileHeader /> */}
-
-      {/* Main Content Area */}
-      <view className="flex-1 overflow-y-auto">
-        <UserProfileCard />
-        <LevelProgress />
-
-        {/* Stats Grid */}
-        <view className="p-4 grid grid-cols-3 gap-3">
-          <StatTile
-            value={userData.totalXP}
-            label="Total XP"
-            isPrimary={true}
-          />
-          <StatTile
-            value={userData.lessons}
-            label="Lessons"
-            isPrimary={false}
-          />
-          <StatTile
-            value={userData.courses}
-            label="Courses"
-            isPrimary={false}
-          />
+    <view
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#f5f7fb',
+        paddingTop: '40px',
+        padding: '0 20px',
+      }}
+    >
+      <view class="flex flex-col h-[35vh] items-center  justify-center">
+        {/* Avatar */}
+        <view
+          style={{
+            width: '120px',
+            height: '120px',
+            borderRadius: '60px',
+            overflow: 'hidden',
+            borderWidth: '3px',
+            borderColor: '#ffffff',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            marginTop: '30px',
+          }}
+        >
+          <image style={{ width: '100%', height: '100%' }} src={icon} />
         </view>
-
-        {/* Achievements Section */}
-        <view className="p-4 pt-2">
-          <text className="text-xl font-bold text-gray-800 mb-4">
-            Achievements
-          </text>
-          <view className="grid grid-cols-3 gap-4">
-            {achievements.map((item, index) => (
-              <AchievementBadge
-                key={index}
-                icon={item.icon}
-                title={item.title}
-                description={item.description}
-                colorClass={item.colorClass}
-              />
-            ))}
-          </view>
-        </view>
-
-        <view className="p-4 flex justify-center">
-          <Button
-            color="blue"
-            onPress={() => {
-              logout();
-              navigate('/login');
+        {/* Name */}
+        <text
+          style={{
+            marginTop: '16px',
+            fontSize: '18px',
+            fontWeight: '600',
+            letterSpacing: '2px',
+          }}
+        >
+          {user?.name}
+        </text>
+        <view style={{ marginTop: '20px', width: '100%' }}>
+          <view
+            style={{
+              height: '40px',
+              borderRadius: '20px',
+              backgroundColor: '#ffffff',
+              marginBottom: '10px',
             }}
-            variant="solid"
-          >
-            Logout
-          </Button>
+          />
+          <view
+            style={{
+              height: '40px',
+              borderRadius: '20px',
+              backgroundColor: '#ffffff',
+              marginBottom: '10px',
+            }}
+          />
         </view>
+      </view>
+
+      {/* Level + progress bar */}
+      <view
+        style={{
+          marginTop: '24px',
+          width: '100%',
+        }}
+      >
+        <view
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: '6px',
+          }}
+        >
+          <text style={{ fontSize: '14px', fontWeight: '500' }}>
+            Level {level}
+          </text>
+          <text style={{ fontSize: '12px', color: '#888888' }}>
+            {Math.round(progress * 100)}%
+          </text>
+        </view>
+        <view
+          style={{
+            height: '8px',
+            borderRadius: '4px',
+            backgroundColor: '#dde2f0',
+            overflow: 'hidden',
+          }}
+        >
+          <view
+            style={{
+              width: `${progress * 100}%`,
+              height: '100%',
+              backgroundImage: 'linear-gradient(90deg, #4f8cff, #6cf0ff)',
+            }}
+          />
+        </view>
+      </view>
+      {/* Achievements grid */}
+      <view
+        style={{
+          marginTop: '28px',
+          width: '100%',
+        }}
+      >
+        <text
+          style={{
+            fontSize: '16px',
+            fontWeight: '600',
+            marginBottom: '12px',
+          }}
+        >
+          Achievements
+        </text>
+        <view
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <Card key={idx} className="w-[30%]">
+              <view
+                key={idx}
+                style={{
+                  width: '100%',
+                  aspectRatio: '1',
+                  borderRadius: '12px',
+                  backgroundColor: '#ffffff',
+                  marginBottom: '10px',
+                }}
+              />
+            </Card>
+          ))}
+        </view>
+        <Button
+          color="blue"
+          variant="solid"
+          onPress={() => {
+            logout();
+          }}
+        >
+          Logout
+        </Button>
       </view>
     </view>
   );
-};
+}
+export default ProfileScreen;

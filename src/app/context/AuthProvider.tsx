@@ -1,108 +1,91 @@
-// import React, { createContext, useContext, useState } from 'react';
-// import type { Token, User } from '../entity/auth';
-// import { useEffect } from '@lynx-js/react';
-// type AuthContextType = {
-//   accessToken: Token | null;
-//   setAccessToken: (t: Token | null) => void;
-//   user: User | null;
-//   setUser: (u: User | null) => void;
-// };
-// const AuthContext = createContext<AuthContextType | null>(null);
-// export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-//   const [accessToken, setAccessToken] = useState<Token | null>(() => {
-//     const stored = localStorage.getItem('accessToken');
-//     return stored ? JSON.parse(stored) : null;
-//   });
-
-//   const [user, setUser] = useState<User | null>(() => {
-//     const stored = localStorage.getItem('user');
-//     return stored ? JSON.parse(stored) : null;
-//   });
-
-//   // Sync token to localStorage
-//   useEffect(() => {
-//     if (accessToken) {
-//       localStorage.setItem('accessToken', JSON.stringify(accessToken));
-//     } else {
-//       localStorage.removeItem('accessToken');
-//     }
-//   }, [accessToken]);
-
-//   // Sync user to localStorage
-//   useEffect(() => {
-//     if (user) {
-//       localStorage.setItem('user', JSON.stringify(user));
-//     } else {
-//       localStorage.removeItem('user');
-//     }
-//   }, [user]);
-
-//   return (
-//     <AuthContext.Provider
-//       value={{ accessToken, setAccessToken, user, setUser }}
-//     >
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
 import { createContext, useContext, useEffect, useState } from 'react';
-import type { Token, User } from '../model/auth';
-import {
-  loadToken,
-  loadUser,
-  saveToken,
-  saveUser,
-} from '../constant/localStorage';
+import type { Token, User } from '../repository/auth/type';
+import { getPref, PrefKey, removePref, setPref } from '@/helper/localStorage';
+import { isTokenValid } from '@/helper/isTokenValid';
+import { authRepo } from '@/repository/auth';
+import { useNavigate } from 'react-router';
+import { is } from 'zod/locales';
 
-// auth.tsx
 type AuthContextType = {
   accessToken: Token | null;
   setAccessToken: (t: Token | null) => void;
   user: User | null;
   setUser: (u: User | null) => void;
   logout: () => void;
+  isAuthenticated: boolean;
 };
+
 const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const nav = useNavigate();
+
   const [accessToken, _setAccessToken] = useState<Token | null>(null);
   const [user, _setUser] = useState<User | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
+  const [isAuthenticated, _setIsAuthenticated] = useState(false);
+
   useEffect(() => {
     (async () => {
       try {
-        const existing = await loadToken();
-        const user = await loadUser();
-        _setUser(user);
-        _setAccessToken(existing);
+        const token = await getPref<Token>(PrefKey.Token);
+        const user = await getPref<User>(PrefKey.User);
+
+        if (token && token.access_token && user && isTokenValid(token)) {
+          _setUser(user);
+          _setAccessToken(token);
+        } else {
+          if (token?.refresh_token) {
+            const newToken = await authRepo.refreshToken(token.refresh_token);
+            if (newToken.data) {
+              setAccessToken(newToken.data);
+              _setUser(user);
+            }
+          }
+        }
+
         setHydrated(true);
-        console.log(existing);
       } catch (err) {
-        console.log(err);
         setHydrated(true);
       }
     })();
-    console.log('ok');
   }, []);
 
   const setAccessToken = (token: Token | null) => {
+    if (!token) return;
+    token.expires_in = token.expires_in + Math.floor(Date.now() / 1000);
     _setAccessToken(token);
-    saveToken(token);
+    setPref(PrefKey.Token, token);
   };
 
   const setUser = (user: User | null) => {
     _setUser(user);
-    saveUser(user);
+    setPref(PrefKey.User, user);
   };
 
   const logout = () => {
-    setAccessToken(null);
-    setUser(null);
+    _setAccessToken(null);
+    _setUser(null);
+    removePref();
   };
+
+  useEffect(() => {
+    _setIsAuthenticated(Boolean(accessToken && isTokenValid(accessToken)));
+    if (!isAuthenticated) {
+      nav('/login', { replace: true });
+    }
+  }, [accessToken]);
 
   return (
     <AuthContext.Provider
-      value={{ accessToken, setAccessToken, user, setUser, logout }}
+      value={{
+        accessToken,
+        setAccessToken,
+        user,
+        setUser,
+        logout,
+        isAuthenticated,
+      }}
     >
       {children}
     </AuthContext.Provider>

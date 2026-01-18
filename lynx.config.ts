@@ -26,11 +26,11 @@ export default defineConfig({
     pluginReactLynx(),
     pluginTypeCheck(),
   ],
-  source: {
-    alias: {
-      react$: require.resolve('@lynx-js/react/compat'),
-      '@': path.resolve(__dirname, './src/app'),
+  output: {
+    filename: {
+      svg: 'assets/images/[name].[hash:8].[ext]',
     },
+    dataUriLimit: 0,
   },
   tools: {
     rspack: {

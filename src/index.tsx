@@ -8,6 +8,7 @@ const router = (
     <AppRoutes />
   </MemoryRouter>
 );
+
 root.render(router);
 
 if (import.meta.webpackHot) {
