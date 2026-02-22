@@ -5,8 +5,8 @@ import { pluginQRCode } from '@lynx-js/qrcode-rsbuild-plugin';
 import { pluginReactLynx } from '@lynx-js/react-rsbuild-plugin';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { createRequire } from 'node:module';
-import { tanstackRouter } from '@tanstack/router-plugin/rspack';
 import { fileURLToPath } from 'node:url';
+import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -14,7 +14,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src/app'),
+      '@': path.resolve(__dirname, './src'),
+      '@login': path.resolve(__dirname, './src/views/Login'),
     },
   },
   plugins: [
@@ -25,6 +26,7 @@ export default defineConfig({
     }),
     pluginReactLynx(),
     pluginTypeCheck(),
+    pluginTypedCSSModules(),
   ],
   output: {
     filename: {

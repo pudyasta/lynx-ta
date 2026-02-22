@@ -22,7 +22,7 @@ class MainActivity : Activity() {
         val deviceType = getDeviceType(application)
 
         val props = mapOf<String, Any>(
-            "appTheme" to "light ",
+            "appTheme" to "light",
             "appName" to applicationContext.appName,
             "device" to {
                 "os" to "android"

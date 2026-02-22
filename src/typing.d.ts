@@ -1,4 +1,4 @@
-import type { Theme } from '@/constant/style';
+import type { Theme } from './constant/style';
 
 declare let NativeModules: {
   NativeLocalStorageModule: {

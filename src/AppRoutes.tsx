@@ -1,13 +1,13 @@
 import { Routes, Route, useLocation } from 'react-router';
-import './app/styles/core.css';
-import LoginPage from './app/views/Login/LoginPages';
-import RegisterPage from './app/views/Register/RegisterPages';
-import HomePage from './app/views/Home/HomePage';
-import { AuthProvider } from './app/context/AuthProvider';
-import { ProtectedRoute } from './app/middleware/ProtectedRoute';
+import './styles/core.css';
+import LoginPage from './views/Login/LoginPages';
+import RegisterPage from './views/Register/RegisterPages';
+import HomePage from './views/Home/HomePage';
+import { AuthProvider } from './context/AuthProvider';
+import { ProtectedRoute } from './middleware/ProtectedRoute';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from '@/context/QueryClient';
-import { StyleProvider } from '@/context/StyleProvider';
+import { queryClient } from './context/QueryClient';
+import { StyleProvider } from './context/StyleProvider';
 
 declare module '@lynx-js/types' {
   interface GlobalProps {
@@ -26,10 +26,10 @@ export function AppRoutes() {
       <AuthProvider>
         <StyleProvider>
           <Routes location={loc}>
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<LoginPage />} />
             <Route path="/signup" element={<RegisterPage />} />
             <Route
-              path="/"
+              path="/a"
               element={<ProtectedRoute element={<HomePage />} />}
             />
           </Routes>
