@@ -1,16 +1,22 @@
-# Local
+*.iml
+.gradle
+/local.properties
+/.idea/
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
 .DS_Store
-*.local
-*.log*
-
-# Dist
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
 node_modules
-dist/
 
-# IDE
-.vscode/*
-!.vscode/extensions.json
-.idea
 
-# TypeScript
-*.tsbuildinfo
+bun.lockb
+pnp-lock.yaml
+

@@ -3,14 +3,20 @@
     "strict": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
+    "lib": ["ESNext"],
 
     "esModuleInterop": true,
     "skipLibCheck": true,
 
     "noEmit": true,
+
+    "paths": {
+      "@/*": ["./src/*"],
+      "@login/*": ["./src/pages/Login/*"]
+    }
   },
   "references": [
-    { "path": "./tsconfig.node.json" },
+   { "path": "./tsconfig.node.json" },
     { "path": "./src" },
   ],
   "files": [],

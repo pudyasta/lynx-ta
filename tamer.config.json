@@ -1,0 +1,11 @@
+{
+  "android": {
+    "appName": "Levl",
+    "packageName": "com.levl.app",
+    "sdk": "/Users/bytedance/Library/Android/sdk"
+  },
+  "ios": {
+    "appName": "Levl",
+    "bundleId": "com.levl.app"
+  }
+}
