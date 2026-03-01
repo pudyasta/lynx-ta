@@ -2,6 +2,7 @@ import { registerSchema } from './registerValidation';
 import { registerApi } from '@/repository/auth';
 import { useMutation } from '@tanstack/react-query';
 import type { RegisterRequest } from '@/repository/auth/type';
+import { validateSafely } from '@/lib/helper/validate';
 
 interface UseRegisterOptions {
   onValidationError?: (errors: any) => void;
@@ -12,18 +13,17 @@ interface UseRegisterOptions {
 export const useRegister = (options?: UseRegisterOptions) => {
   const mutation = useMutation({
     mutationFn: async (rawValues: RegisterRequest) => {
-      const result = registerSchema.safeParse(rawValues);
+      const result = await validateSafely(registerSchema, rawValues);
       if (!result.success) {
-        const flattenedErrors = result.error.flatten().fieldErrors;
-        throw { type: 'VALIDATION_ERROR', errors: flattenedErrors };
+        throw { type: 'VALIDATION_ERROR', errors: result.errors };
       }
 
       return registerApi({
-        name: result.data.name,
-        username: result.data.username,
-        email: result.data.email,
-        password: result.data.password,
-        confirm_password: result.data.confirm_password,
+        name: rawValues.name,
+        username: rawValues.username,
+        email: rawValues.email,
+        password: rawValues.password,
+        confirm_password: rawValues.confirm_password,
       });
     },
     onSuccess: (data) => {

@@ -2,6 +2,8 @@ import { useEffect, useState } from '@lynx-js/react';
 import styles from './style.module.css';
 import { sadMascot } from '../../assets/images/mascot';
 import Button from '../common/Button';
+import Text from '../Text';
+import { TextType } from '../Text/types';
 
 export enum ModalTemplate {
   Default = 'default',
@@ -35,7 +37,7 @@ export function Modal({
       setTimeout(() => setActive(true), 0);
     } else {
       setActive(false);
-      setTimeout(() => setMounted(false), 300);
+      setMounted(false);
     }
   }, [visible]);
   if (!mounted) return null;
@@ -51,9 +53,6 @@ export function Modal({
       <view
         className={styles.dialog}
         bindtap={(e: any) => e.stopPropagation?.()}
-        style={{
-          transform: active ? 'scale(1)' : 'scale(0.1)',
-        }}
       >
         {template !== ModalTemplate.Custom && (
           <>
@@ -63,9 +62,11 @@ export function Modal({
                 className={styles.mascot}
                 mode="aspectFit"
               />
-              <text className={styles.title}>{title}</text>
-              <text className={styles.body}>{body}</text>
-              <Button variant="solid" color="blue" size="small">
+              <Text size={TextType.h3} bold className={styles.title}>
+                {title}
+              </Text>
+              <Text className={styles.body}>{body}</Text>
+              <Button variant="outline" color="blue" size="small">
                 {buttonText}
               </Button>
             </view>

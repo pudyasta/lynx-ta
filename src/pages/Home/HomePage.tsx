@@ -10,6 +10,7 @@ import {
   rankingInactive,
   bookActive,
   bookInactive,
+  booksvg,
 } from '../../assets/images/homeTabIcon';
 import Leaderboard from './components/Leaderboard/Leaderboard';
 import ProfileScreen from './components/Profile/ProfileScreen';

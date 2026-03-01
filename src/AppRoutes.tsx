@@ -1,13 +1,19 @@
 import { Routes, Route, useLocation } from 'react-router';
 import './styles/core.css';
-import LoginPage from './views/Login/LoginPages';
-import RegisterPage from './views/Register/RegisterPages';
-import HomePage from './views/Home/HomePage';
+import LoginPage from './pages/Login/LoginPages';
+import RegisterPage from './pages/Register/RegisterPages';
+import HomePage from './pages/Home/HomePage';
 import { AuthProvider } from './context/AuthProvider';
 import { ProtectedRoute } from './middleware/ProtectedRoute';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './context/QueryClient';
 import { StyleProvider } from './context/StyleProvider';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import {
+  FORGOT_PASSWORD_ROUTE,
+  SIGNIN_ROUTE,
+  SIGNUP_ROUTE,
+} from './constant/route';
 
 declare module '@lynx-js/types' {
   interface GlobalProps {
@@ -26,10 +32,14 @@ export function AppRoutes() {
       <AuthProvider>
         <StyleProvider>
           <Routes location={loc}>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/signup" element={<RegisterPage />} />
+            <Route path={SIGNIN_ROUTE} element={<LoginPage />} />
+            <Route path={SIGNUP_ROUTE} element={<RegisterPage />} />
             <Route
-              path="/a"
+              path={FORGOT_PASSWORD_ROUTE}
+              element={<ForgotPasswordPage />}
+            />
+            <Route
+              path="/"
               element={<ProtectedRoute element={<HomePage />} />}
             />
           </Routes>

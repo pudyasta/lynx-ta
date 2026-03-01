@@ -1,9 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import { loginSchema, type LoginSchema } from './loginValidation';
-import type { LoginRequest } from '../../../repository/auth/type';
+import type { LoginRequest } from '@/repository/auth/type';
 import { useNavigate } from 'react-router';
-import { useAuth } from '../../../context/AuthProvider';
-import { loginApi } from '../../../repository/auth';
+import { useAuth } from '@/context/AuthProvider';
+import { loginApi } from '@/repository/auth';
+import { useState } from '@lynx-js/react';
+import { validateSafely } from '@/lib/helper/validate';
 
 interface UseLoginOptions {
   onValidationError?: (errors: any) => void;
@@ -17,13 +19,13 @@ export const useLogin = (options?: UseLoginOptions) => {
 
   const mutation = useMutation({
     mutationFn: async (rawValues: LoginRequest) => {
-      const result = loginSchema.safeParse(rawValues);
+      const result = await validateSafely(loginSchema, rawValues);
+      console.log(result);
       if (!result.success) {
-        const flattenedErrors = result.error.flatten().fieldErrors;
-        throw { type: 'VALIDATION_ERROR', errors: flattenedErrors };
+        throw { type: 'VALIDATION_ERROR', errors: result.errors };
       }
 
-      const validatedData: LoginSchema = result.data;
+      const validatedData: LoginSchema = rawValues as LoginSchema;
       return loginApi({
         login: validatedData.login,
         password: validatedData.password,
@@ -57,7 +59,6 @@ export const useLogin = (options?: UseLoginOptions) => {
       nav('/', { replace: true });
     },
     onError: (error: any) => {
-      console.log(error);
       if (error.type === 'VALIDATION_ERROR') {
         options?.onValidationError?.(error.errors);
       }

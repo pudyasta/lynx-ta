@@ -15,7 +15,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@login': path.resolve(__dirname, './src/views/Login'),
+      '@login': path.resolve(__dirname, './src/pages/Login'),
     },
   },
   plugins: [

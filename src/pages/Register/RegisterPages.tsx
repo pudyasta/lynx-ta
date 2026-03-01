@@ -1,11 +1,17 @@
 import { useRef, useState } from '@lynx-js/react';
-import Input, { type InputRef } from '../../components/common/Input';
-import Button from '../../components/common/Button';
+import Input, { type InputRef } from '@/components/Input/Input';
+import Button from '@/components/common/Button';
 import { useNavigate } from 'react-router';
-import Text from '../../components/Text';
-import { TextType } from '../../components/Text/types';
-import { useKeyboardShift } from '../../hooks/useKeyboardShift';
-import { useRegister } from '@/views/Register/usecase/useRegister';
+import Text from '@/components/Text';
+import { TextType } from '@/components/Text/types';
+import { useKeyboardShift } from '@/hooks/useKeyboardShift';
+import { useRegister } from '@/pages/Register/usecase/useRegister';
+import { hiMascot, searchMascot } from '@/assets/images/mascot';
+import { loginBanner } from '@/assets/images/pages/';
+import { Colors } from '@/constant/style';
+import style from './RegisterPage.module.css';
+import { SIGNIN_ROUTE } from '@/constant/route';
+import { Modal, ModalTemplate } from '@/components/Modal/Modal.view';
 
 export default function RegisterPage() {
   const emailRef = useRef<InputRef>(null);
@@ -14,7 +20,10 @@ export default function RegisterPage() {
   const passwordRef = useRef<InputRef>(null);
   const confirmPasswordRef = useRef<InputRef>(null);
 
-  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const nav = useNavigate();
+
   const { kbHeight } = useKeyboardShift('panel');
   const { isLoading, error, execute } = useRegister({
     onValidationError: (errors) => {
@@ -56,15 +65,28 @@ export default function RegisterPage() {
       className={` z-0 ${kbHeight > 0 ? `pb-[20vh]` : ''}`}
     >
       <view
-        class={`flex flex-col items-center px-6 min-h-screen gap-6 pt-20 pb-20`}
+        style={{
+          backgroundImage: `url(${loginBanner})`,
+        }}
+        className={style.banner}
       >
-        <Text size={TextType.h1} bold>
-          Buat Akun Baru
-        </Text>
-        <Text size={TextType.b1} className="text-center">
-          Cuma butuh sebentar buat mulai belajar hal baru bareng Owi
-        </Text>
+        <view className={style.header}>
+          <view className={style.headerLogo}>
+            <Text size={TextType.h1}>📖</Text>
+          </view>
 
+          <Text size={TextType.h1} color="white" bold>
+            Welcome Explorer!
+          </Text>
+          <Text size={TextType.b2} color="white">
+            Discover a new world with Levl!
+          </Text>
+        </view>
+        <view className={style.mascotContainer}>
+          <image src={searchMascot} className={style.mascot} />
+        </view>
+      </view>
+      <view className={style.formContainer}>
         <Input title="Name" variant="text" icon="user" ref={nameRef} />
         <Input title="Email" variant="email" icon="mail" ref={emailRef} />
         <Input title="Username" variant="text" icon="user" ref={usernameRef} />
@@ -81,24 +103,30 @@ export default function RegisterPage() {
           ref={confirmPasswordRef}
         />
 
-        <view class="w-full flex flex-col gap-3">
-          <Button
-            color="blue"
-            variant="solid"
-            onPress={registerUser}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Loading...' : 'Buat Akun'}
-          </Button>
-
-          {/* Signup */}
-          <view class="w-full" bindtap={() => navigate('/login')}>
-            <Button color="yellow" variant="solid">
-              Udah punya akun? Masuk disini
-            </Button>
-          </view>
-        </view>
+        <Button
+          color="blue"
+          variant="solid"
+          onPress={registerUser}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Loading...' : 'Sign Up'}
+        </Button>
+        {/* Signup */}
+        <Text typeof={TextType.b1} onClick={() => nav(SIGNIN_ROUTE)}>
+          Udah punya akun?{' '}
+          <Text typeof={TextType.b1} style={{ color: Colors.Primary }}>
+            Daftar disini
+          </Text>
+        </Text>
       </view>
+
+      <Modal
+        visible={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Oops! Something went wrong"
+        body="We're sorry, something went wrong. Please try again."
+        template={ModalTemplate.Sad}
+      />
     </scroll-view>
   );
 }

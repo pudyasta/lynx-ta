@@ -12,7 +12,7 @@
 
     "paths": {
       "@/*": ["./src/*"],
-      "@login/*": ["./src/views/Login/*"]
+      "@login/*": ["./src/pages/Login/*"]
     }
   },
   "references": [

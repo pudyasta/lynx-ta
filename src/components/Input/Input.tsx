@@ -2,11 +2,14 @@ import { eye, eyeClose } from '../../assets/images/icon';
 import { Colors } from '../../constant/style';
 import { useImperativeHandle, useState, forwardRef } from '@lynx-js/react';
 import { useEffect, useRef } from 'react';
+import Text from '../Text';
+
+import style from './Input.module.css';
 
 export interface InputRef {
   getValue: () => string;
   setValue: (newValue: string) => void;
-  setError: (errorMessage: string[] | null) => void;
+  setError: (errorMessage: string | null) => void;
   getError: () => string[] | null;
 }
 
@@ -53,7 +56,8 @@ const Input = forwardRef<InputRef, InputProps>(
           setDebouncedValue(newValue);
           if (timerRef.current) clearTimeout(timerRef.current);
         },
-        setError: (message: string[] | null) => setError(message),
+        setError: (message: string | null) =>
+          setError(message ? [message] : null),
         getError: () => error,
       }),
       [debouncedValue, error],
@@ -70,25 +74,22 @@ const Input = forwardRef<InputRef, InputProps>(
     };
 
     return (
-      <view class="relative w-full min-h-14 ">
-        {/* Floating Label */}
-
-        <view class="z-10">
-          <text
-            class={`absolute  transition-all duration-300 
-            ${
-              isFloating
-                ? '-top-3 text-sm text-gray-600  px-2 rounded left-3'
-                : 'top-4 text-lg text-gray-500  left-6'
-            }`}
-            style={{ backgroundColor: Colors.Background }}
-          >
-            {title}
-          </text>
-        </view>
+      <view className={style.container}>
+        <Text
+          style={{ backgroundColor: Colors.Background, marginBottom: '8px' }}
+        >
+          {title}
+        </Text>
 
         <view
-          class={`flex transition-all duration-300 items-center border border-2 ${isFloating ? 'border-blue-300' : 'border-gray-200'}  rounded-xl px-4 py-4 ${error ? 'border-red-500' : ''}`}
+          className={style.input}
+          style={{
+            borderColor: error
+              ? Colors.Error
+              : isFloating
+                ? Colors.Primary
+                : Colors.Accent,
+          }}
         >
           <input
             type={variant === 'password' && !showPassword ? 'password' : 'text'}
@@ -118,7 +119,7 @@ const Input = forwardRef<InputRef, InputProps>(
           )}
         </view>
         <view className={` py-2 ${error ? 'block' : 'hidden'}`}>
-          {error && <text className="text-red-500 mt-1">{error[0]}</text>}
+          {error && <Text color="red">{error[0]}</Text>}
         </view>
       </view>
     );

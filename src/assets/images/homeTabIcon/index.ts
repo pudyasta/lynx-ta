@@ -7,6 +7,8 @@ import rankingInactive from './ranking-innactive.png?inline';
 import bookActive from './book.png?inline';
 import bookInactive from './book-innactive.png?inline';
 
+import booksvg from './book.svg?inline';
+
 export {
   homeActive,
   homeInactive,
@@ -16,4 +18,5 @@ export {
   rankingInactive,
   bookActive,
   bookInactive,
+  booksvg,
 };

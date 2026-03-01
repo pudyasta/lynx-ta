@@ -49,19 +49,17 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <text
       className={`
-        w-full text-center font-semibold rounded-xl ${size === 'small' ? 'py-3' : size === 'medium' ? 'py-4' : 'py-6'} font-bold transition-all duration-500 ease-out   border-[1px]  
+        w-full text-center font-semibold rounded-xl ${size === 'small' ? 'py-3' : size === 'medium' ? 'py-4' : 'py-6'} font-bold transition-all duration-500 ease-out border-[1px] 
+        ${animate ? 'animate-press-bounce' : ''}  
         ${
-          variant === 'solid'
-            ? color == 'blue'
-              ? 'text-white border-neutral ' + colorStyles[color]
-              : 'text-black border-neutral ' + colorStyles[color]
-            : ` bg-transparent  ${borderColorStyles[color]} ${textColorStyles[color]}`
-        } 
-         ${variant === 'solid' ? 'bg-opacity-80' : ''}
-        ${animate ? 'animate-press-bounce' : ''} 
-        ${disabled ? 'opacity-50 cursor-not-allowed bg-gray-400 border-gray-400' : ''}
-
-      `}
+          disabled
+            ? 'cursor-not-allowed !bg-gray-400/20 border-gray-400/20 text-gray-700/50 '
+            : variant === 'solid'
+              ? color == 'blue'
+                ? ' text-white border-neutral ' + colorStyles[color]
+                : ' text-black border-neutral ' + colorStyles[color]
+              : ` bg-transparent  ${borderColorStyles[color]} ${textColorStyles[color]}`
+        }`}
       bindtap={handleTap}
     >
       {children}
